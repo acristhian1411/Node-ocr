@@ -1,8 +1,14 @@
+[build]
+  functions = "functions"
+  command = "npm install && npm run build"  # Asegúrate de ajustar esto según las necesidades de tu proyecto
+  publish = "public"  # Ajusta si el directorio de tus archivos estáticos es diferente
+
+[[redirects]]
+  force = true
+  from = "/api/*"
+  status = 200
+  to = "/.netlify/functions/api/:splat"
+
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
-[[redirects]]
-  force = true
-  from = "/*"
-  status = 200
-  to = "/.netlify/functions/:splat"
