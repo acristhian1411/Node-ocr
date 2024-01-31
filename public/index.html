@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extractor de Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            margin-top: 10px;
+            width: 100%;
+            height: 100px;
+        }
+
+        #thumbnail {
+            max-width: 100%;
+            max-height: 200px; /* Ajusta según tu preferencia */
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" id="imageInput">
+        <button type="submit">Extraer Texto</button>
+    </form>
+
+    <img id="thumbnail" alt="Miniatura de la imagen">
+
+    <textarea id="result" readonly></textarea>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultTextarea = document.getElementById('result');
+            const thumbnailImage = document.getElementById('thumbnail');
+            const imageInput = document.getElementById('imageInput');
+
+            const form = document.querySelector('form');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const formData = new FormData(form);
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const text = await response.text();
+                    resultTextarea.value = text;
+
+                    // Mostrar miniatura
+                    const file = imageInput.files[0];
+                    if (file) {
+                        const imageUrl = URL.createObjectURL(file);
+                        thumbnailImage.src = imageUrl;
+                    }
+                } else {
+                    resultTextarea.value = 'Error al procesar la imagen.';
+                }
+            });
+
+            resultTextarea.addEventListener('click', () => {
+                resultTextarea.select();
+                document.execCommand('copy');
+            });
+
+            // Actualizar miniatura al cambiar la imagen
+            imageInput.addEventListener('change', () => {
+                const file = imageInput.files[0];
+                if (file) {
+                    const imageUrl = URL.createObjectURL(file);
+                    thumbnailImage.src = imageUrl;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
