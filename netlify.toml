@@ -1,12 +1,13 @@
 [build]
-  functions = "functions"
-  command = "npm install"  # Asegúrate de ajustar esto según las necesidades de tu proyecto
-  publish = "public"  # Ajusta si el directorio de tus archivos estáticos es diferente
+  command = "npm run build"
+  publish = "public"
 
 [[redirects]]
-  force = true
-  from = "/api/*"
+  from = "/*"
+  to = "/index.html"
   status = 200
-  to = "/.netlify/functions/api/:splat"
 
-
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
