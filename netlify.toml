@@ -1,6 +1,6 @@
 [build]
   functions = "functions"
-  command = "npm install && npm run build"  # Asegúrate de ajustar esto según las necesidades de tu proyecto
+  command = "npm install"  # Asegúrate de ajustar esto según las necesidades de tu proyecto
   publish = "public"  # Ajusta si el directorio de tus archivos estáticos es diferente
 
 [[redirects]]
