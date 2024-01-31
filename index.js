@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const Tesseract = require('tesseract.js');
-
+const serverless = require("serverless-http"); 
 const app = express();
 const port = 3000;
 
@@ -32,3 +32,6 @@ app.post('/upload', upload.single('image'), (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
+
+module.exports.handler = serverless(app);
+//  export const handler = serverless(app)
