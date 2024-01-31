@@ -29,9 +29,4 @@ app.post('/upload', upload.single('image'), (req, res) => {
     });
 });
 
-// app.listen(port, () => {
-//     console.log(`Servidor corriendo en http://localhost:${port}`);
-// });
-
-module.exports.handler = serverless(app);
-//  export const handler = serverless(app)
+exports.handler = serverless(app);
